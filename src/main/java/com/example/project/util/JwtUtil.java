@@ -14,18 +14,19 @@ import java.util.Date;
 public class JwtUtil {
 
     private final SecretKey secretKey;
+    private final long expirationTime;
 
-    private static final long EXPIRATION_TIME = 3600000L; // 1小時
-
-    public JwtUtil(@Value("${jwt.secret}") String secret) {
+    public JwtUtil(@Value("${jwt.secret}") String secret,
+                   @Value("${jwt.expiration}") long expiration) {
         this.secretKey = Keys.hmacShaKeyFor(Base64.getDecoder().decode(secret));
+        this.expirationTime = expiration;
     }
 
     public String generateToken(String username) {
         return Jwts.builder()
                 .setSubject(username)
                 .signWith(secretKey, SignatureAlgorithm.HS256)
-                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+                .setExpiration(new Date(System.currentTimeMillis() + expirationTime)) // 使用配置的時間
                 .compact();
     }
 

@@ -4,6 +4,10 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+# Configuration files with sensitive data
+application-*.properties
+.env
+
 ### STS ###
 .apt_generated
 .classpath
@@ -31,3 +35,24 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Logs
+*.log
+logs/
+
+# Database files
+*.db
+*.sqlite
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# JWT keys and secrets
+*.key
+*.pem
