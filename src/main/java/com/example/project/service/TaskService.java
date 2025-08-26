@@ -1,9 +1,7 @@
 package com.example.project.service;
 
 import com.example.project.dto.TaskDTO;
-import com.example.project.model.People;
 import com.example.project.model.Task;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -15,7 +13,7 @@ import java.util.Objects; // 修正：匯入 Objects
 
 @Service
 public class TaskService {
-    static List<Task> list =new ArrayList<Task>();
+    static List<Task> list =new ArrayList<>();
 
     static {
         list.add(new Task("1", "學習React",Task.Status.IN_PROGRESS, "學習React的基礎知識", new Date("2025/08/21")));
@@ -36,7 +34,7 @@ public class TaskService {
 
         String newId = String.valueOf(maxId + 1);
 
-        Date dueDate = null;
+        Date dueDate;
         try {
             dueDate = new SimpleDateFormat("yyyy/MM/dd").parse(taskDTO.getDue());
         } catch (ParseException e) {
