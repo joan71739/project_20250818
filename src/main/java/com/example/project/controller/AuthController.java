@@ -2,6 +2,7 @@ package com.example.project.controller;
 
 import com.example.project.model.JwtResponse;
 import com.example.project.util.JwtUtil;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,6 +12,12 @@ import java.util.Map;
 public class AuthController {
 
     private final JwtUtil jwtUtil;
+
+    @Value("${spring.security.user.name}")
+    private String configuredUsername;
+
+    @Value("${spring.security.user.password}")
+    private String configuredPassword;
 
     // 建構子注入（推薦）
     public AuthController(JwtUtil jwtUtil) {
@@ -22,7 +29,7 @@ public class AuthController {
         String username = payload.get("username");
         String password = payload.get("password");
 
-        if ("user".equals(username) && "0000".equals(password)) {
+        if (configuredUsername.equals(username) && configuredPassword.equals(password)) {
             String token = jwtUtil.generateToken(username);
             return ResponseEntity.ok(new JwtResponse(token));
         } else {
