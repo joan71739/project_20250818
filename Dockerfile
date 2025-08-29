@@ -6,6 +6,10 @@ WORKDIR /app
 # 複製 Maven 設定與程式碼
 COPY pom.xml mvnw ./
 COPY .mvn .mvn
+
+# Railway 部署必须添加这行
+RUN chmod +x ./mvnw
+
 RUN ./mvnw dependency:go-offline -DskipTests
 
 COPY src src
@@ -18,7 +22,6 @@ FROM eclipse-temurin:21-jre-jammy
 
 WORKDIR /app
 
-# 從 build stage 拿 jar
 COPY --from=build /app/target/*.jar app.jar
 
 EXPOSE 8080
